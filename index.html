@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maple &amp; Co. — Handcrafted Goods</title>
+<style>
+  :root{
+    --ink:#1f2a24;
+    --paper:#faf7f2;
+    --accent:#4f7a5c;
+    --accent-dark:#3b5c46;
+    --muted:#6b6f6a;
+    --line:#e4ddd0;
+    --bubble-user:#4f7a5c;
+    --bubble-bot:#eef1ec;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+  }
+  a{color:inherit;}
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(250,247,242,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    max-width:1100px;margin:0 auto;padding:18px 24px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .logo{font-size:1.3rem;font-weight:700;letter-spacing:0.5px;}
+  .logo span{color:var(--accent);}
+  nav ul{list-style:none;display:flex;gap:28px;}
+  nav ul a{text-decoration:none;font-weight:500;font-size:0.95rem;color:var(--ink);}
+  nav ul a:hover{color:var(--accent);}
+
+  .hero{
+    max-width:1100px;margin:0 auto;padding:90px 24px 70px;
+    display:grid;grid-template-columns:1.1fr 0.9fr;gap:40px;align-items:center;
+  }
+  .hero h1{font-size:2.6rem;line-height:1.2;margin-bottom:18px;}
+  .hero p{color:var(--muted);font-size:1.05rem;margin-bottom:28px;max-width:480px;}
+  .btn{
+    display:inline-block;background:var(--accent);color:#fff;
+    padding:13px 26px;border-radius:8px;text-decoration:none;font-weight:600;
+    border:none;cursor:pointer;font-size:0.95rem;transition:background .2s;
+  }
+  .btn:hover{background:var(--accent-dark);}
+  .btn-outline{
+    background:transparent;color:var(--accent);border:1.5px solid var(--accent);
+    margin-left:12px;
+  }
+  .btn-outline:hover{background:var(--accent);color:#fff;}
+  .hero-art{
+    height:320px;border-radius:16px;
+    background:linear-gradient(135deg,#dfe8de,#c9d9c9 60%,#b7cbb8);
+    display:flex;align-items:center;justify-content:center;
+    font-size:4rem;
+  }
+
+  section{max-width:1100px;margin:0 auto;padding:60px 24px;}
+  .section-title{font-size:1.9rem;margin-bottom:8px;}
+  .section-sub{color:var(--muted);margin-bottom:36px;max-width:520px;}
+
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .card{
+    background:#fff;border:1px solid var(--line);border-radius:14px;
+    padding:28px;
+  }
+  .card .icon{font-size:1.8rem;margin-bottom:14px;}
+  .card h3{font-size:1.1rem;margin-bottom:8px;}
+  .card p{color:var(--muted);font-size:0.93rem;}
+
+  .about{
+    display:grid;grid-template-columns:0.9fr 1.1fr;gap:48px;align-items:center;
+    background:#fff;border-radius:16px;border:1px solid var(--line);
+    padding:48px;
+  }
+  .about-art{
+    height:260px;border-radius:12px;
+    background:linear-gradient(135deg,#f0e6d2,#e3d3af);
+  }
+
+  .testimonials{background:#eef1ec;border-radius:16px;padding:48px;}
+  .t-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:24px;}
+  .t-card{background:#fff;border-radius:12px;padding:24px;}
+  .t-card p{font-style:italic;color:var(--ink);margin-bottom:12px;}
+  .t-name{font-weight:600;font-size:0.9rem;color:var(--muted);}
+
+  .contact{
+    display:grid;grid-template-columns:1fr 1fr;gap:40px;
+  }
+  .contact form{display:flex;flex-direction:column;gap:14px;}
+  .contact input,.contact textarea{
+    padding:12px 14px;border:1px solid var(--line);border-radius:8px;
+    font-family:inherit;font-size:0.95rem;background:#fff;
+  }
+  .contact textarea{resize:vertical;min-height:110px;}
+  .info-item{margin-bottom:18px;}
+  .info-item h4{font-size:0.85rem;text-transform:uppercase;letter-spacing:0.6px;color:var(--muted);margin-bottom:4px;}
+
+  footer{
+    border-top:1px solid var(--line);padding:32px 24px;text-align:center;
+    color:var(--muted);font-size:0.88rem;
+  }
+
+  @media (max-width:760px){
+    .hero,.about,.contact{grid-template-columns:1fr;}
+    .grid-3,.t-grid{grid-template-columns:1fr;}
+    nav ul{display:none;}
+    .hero{padding-top:60px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo">Maple <span>&amp; Co.</span></div>
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#testimonials">Reviews</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="btn" style="padding:10px 20px;">Get in Touch</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div>
+    <h1>Handcrafted goods, made with care in small batches.</h1>
+    <p>Maple &amp; Co. creates locally sourced, sustainably made home goods — from candles to woodwork. Every piece is designed and built by hand.</p>
+    <a href="#contact" class="btn">Shop the Collection</a>
+    <a href="#services" class="btn btn-outline">Learn More</a>
+  </div>
+  <div class="hero-art">🌿</div>
+</section>
+
+<section id="services">
+  <h2 class="section-title">What We Offer</h2>
+  <p class="section-sub">A small catalog of things we make well, rather than everything made poorly.</p>
+  <div class="grid-3">
+    <div class="card">
+      <div class="icon">🕯️</div>
+      <h3>Hand-poured Candles</h3>
+      <p>Soy wax, natural fragrance oils, and reusable ceramic vessels.</p>
+    </div>
+    <div class="card">
+      <div class="icon">🪵</div>
+      <h3>Woodwork &amp; Decor</h3>
+      <p>Cutting boards, shelving, and small furniture from reclaimed timber.</p>
+    </div>
+    <div class="card">
+      <div class="icon">🧵</div>
+      <h3>Textiles</h3>
+      <p>Woven throws and table linens made on a small studio loom.</p>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="about">
+    <div class="about-art"></div>
+    <div>
+      <h2 class="section-title">Our Story</h2>
+      <p style="color:var(--muted);margin-bottom:16px;">Maple &amp; Co. started in a garage workshop with one goal: make things that last, using materials that don't cost the earth. Today we're still a small team, still handmaking every order.</p>
+      <p style="color:var(--muted);">Have a question about an order, a custom piece, or wholesale? Use the chat button in the corner — we're happy to help.</p>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="testimonials">
+    <h2 class="section-title">What Customers Say</h2>
+    <div class="t-grid">
+      <div class="t-card">
+        <p>"The cutting board I ordered is gorgeous — better in person than in photos. Fast shipping too."</p>
+        <div class="t-name">— Priya S.</div>
+      </div>
+      <div class="t-card">
+        <p>"Customer support answered my sizing question in minutes through the chat. Really easy to reach."</p>
+        <div class="t-name">— Daniel R.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact">
+    <div>
+      <h2 class="section-title">Get in Touch</h2>
+      <p class="section-sub">Prefer forms to chat? Send us a message and we'll reply within a day.</p>
+      <form onsubmit="event.preventDefault(); alert('Thanks! This is a demo form — connect it to an email service or backend to go live.');">
+        <input type="text" placeholder="Your name" required>
+        <input type="email" placeholder="Your email" required>
+        <textarea placeholder="How can we help?" required></textarea>
+        <button type="submit" class="btn">Send Message</button>
+      </form>
+    </div>
+    <div>
+      <div class="info-item">
+        <h4>Email</h4>
+        <p>hello@mapleandco.example</p>
+      </div>
+      <div class="info-item">
+        <h4>Hours</h4>
+        <p>Mon–Fri, 9am–5pm</p>
+      </div>
+      <div class="info-item">
+        <h4>Studio</h4>
+        <p>412 Birchwood Lane, Portland, OR</p>
+      </div>
+      <div class="info-item">
+        <h4>Live Chat</h4>
+        <p>Click the chat bubble in the bottom-right corner any time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Maple &amp; Co. Placeholder content — replace with your real business details.
+</footer>
+
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/6a55c2ec550ea31d480b660f/1jtfg2r5l';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+
+</body>
+</html>
