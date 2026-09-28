@@ -1,0 +1,16 @@
+{
+  "rules": {
+    "family-chat": {
+      "messages": {
+        ".read": "auth != null",
+        "$id": {
+          ".write": "auth != null && ((!data.exists() && newData.child('uid').val() === auth.uid) || (data.exists() && data.child('uid').val() === auth.uid))"
+        }
+      },
+      "images": {
+        ".read": "auth != null",
+        ".write": "auth != null"
+      }
+    }
+  }
+}
