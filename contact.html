@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Anaya Suits</title>
+<meta name="description" content="Contact Anaya Suits — visit our MG Road, Jaipur shop, message us about sizing or custom stitching, or reach us on live chat.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%F0%9F%AA%A1</text></svg>">
+<style>
+  :root{
+    --ink:#2a1f2b;
+    --paper:#fdf8f4;
+    --accent:#9b2d5e;
+    --accent-dark:#7a2049;
+    --gold:#c9a227;
+    --muted:#6f6570;
+    --line:#eee0e5;
+    --bubble-user:#9b2d5e;
+    --bubble-bot:#f3e9ed;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+  }
+  a{color:inherit;}
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(253,248,244,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    max-width:1100px;margin:0 auto;padding:18px 24px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .logo{font-size:1.3rem;font-weight:700;letter-spacing:0.5px;}
+  .logo span{color:var(--accent);}
+  nav ul{list-style:none;display:flex;gap:28px;}
+  nav ul a{text-decoration:none;font-weight:500;font-size:0.95rem;color:var(--ink);}
+  nav ul a:hover{color:var(--accent);}
+
+  .btn{
+    display:inline-block;background:var(--accent);color:#fff;
+    padding:13px 26px;border-radius:8px;text-decoration:none;font-weight:600;
+    border:none;cursor:pointer;font-size:0.95rem;transition:background .2s;
+  }
+  .btn:hover{background:var(--accent-dark);}
+
+  section{max-width:1100px;margin:0 auto;padding:60px 24px;}
+  .section-title{font-size:1.9rem;margin-bottom:8px;}
+  .section-sub{color:var(--muted);margin-bottom:36px;max-width:560px;}
+
+  .page-head{padding-bottom:0;}
+
+  .contact{display:grid;grid-template-columns:1fr 1fr;gap:40px;}
+  .contact form{display:flex;flex-direction:column;gap:14px;}
+  .contact input,.contact textarea{
+    padding:12px 14px;border:1px solid var(--line);border-radius:8px;
+    font-family:inherit;font-size:0.95rem;background:#fff;
+  }
+  .contact textarea{resize:vertical;min-height:110px;}
+  .info-card{
+    background:#fff;border:1px solid var(--line);border-radius:14px;padding:28px;
+  }
+  .info-item{margin-bottom:18px;}
+  .info-item:last-child{margin-bottom:0;}
+  .info-item h4{font-size:0.85rem;text-transform:uppercase;letter-spacing:0.6px;color:var(--muted);margin-bottom:4px;}
+  .map-note{
+    margin-top:18px;height:160px;border-radius:12px;
+    background:linear-gradient(135deg,#f7ecd9,#ecd9b4);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--muted);font-size:0.9rem;text-align:center;padding:16px;
+  }
+
+  footer{
+    border-top:1px solid var(--line);padding:32px 24px;text-align:center;
+    color:var(--muted);font-size:0.88rem;
+  }
+  footer a{color:var(--accent);}
+
+  /* ---- Notes ---- */
+  .notes{
+    max-width:640px;margin:0 auto;
+    background:#fff;border:1px solid var(--line);border-radius:14px;
+    padding:28px;
+  }
+  .notes h2{font-size:1.15rem;margin-bottom:4px;}
+  .notes .hint{color:var(--muted);font-size:0.88rem;margin-bottom:18px;}
+  .notes form{display:flex;flex-direction:column;gap:12px;}
+  .notes input{
+    padding:11px 14px;border:1px solid var(--line);border-radius:8px;
+    font-family:inherit;font-size:0.95rem;background:#fff;width:100%;
+  }
+  .fc-code{
+    text-align:center;font-size:1.5rem;letter-spacing:14px;
+    text-indent:14px;          /* re-centre: letter-spacing pads the last glyph */
+    padding:14px;max-width:220px;
+  }
+  .notes .row{display:flex;gap:10px;align-items:center;}
+  .notes .status{font-size:0.85rem;color:var(--muted);min-height:1.2em;}
+  .notes .status.error{color:#b3261e;}
+  .hidden{display:none !important;}
+
+  .fc-bar{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:12px;margin-bottom:14px;font-size:0.85rem;color:var(--muted);
+  }
+  .fc-signout{
+    background:none;border:1px solid var(--line);border-radius:6px;
+    padding:5px 12px;font-size:0.82rem;color:var(--muted);cursor:pointer;
+    font-family:inherit;
+  }
+  .fc-signout:hover{border-color:var(--accent);color:var(--accent);}
+  .fc-log{
+    height:340px;overflow-y:auto;border:1px solid var(--line);border-radius:10px;
+    padding:14px;display:flex;flex-direction:column;gap:10px;background:#fdfbfc;
+  }
+  .fc-msg{max-width:78%;display:flex;flex-direction:column;}
+  .fc-msg .who{font-size:0.72rem;color:var(--muted);margin-bottom:3px;padding:0 4px;}
+  .fc-msg .text{
+    padding:9px 13px;border-radius:12px;font-size:0.93rem;
+    white-space:pre-wrap;word-break:break-word;
+  }
+  .fc-msg.them{align-self:flex-start;}
+  .fc-msg.them .text{background:var(--bubble-bot);color:var(--ink);border-bottom-left-radius:4px;}
+  .fc-msg.me{align-self:flex-end;align-items:flex-end;}
+  .fc-msg.me .text{background:var(--bubble-user);color:#fff;border-bottom-right-radius:4px;}
+  .fc-empty{color:var(--muted);font-size:0.88rem;margin:auto;text-align:center;}
+  .fc-compose{display:flex;gap:10px;margin-top:14px;}
+  .fc-compose input{flex:1;}
+  /* .notes form sets column for the sign-in box and outranks .fc-compose */
+  .notes .fc-compose{flex-direction:row;align-items:center;}
+  .fc-attach[hidden]{display:none;}
+
+  /* attachments */
+  .fc-msg .who{display:flex;align-items:center;gap:6px;}
+  .fc-msg.me .who{justify-content:flex-end;}
+  .fc-del{
+    border:none;background:none;color:var(--muted);cursor:pointer;
+    font-size:0.95rem;line-height:1;padding:0 2px;opacity:0;transition:opacity .15s;
+  }
+  .fc-msg:hover .fc-del,.fc-del:focus{opacity:1;}
+  .fc-del:hover{color:#b3261e;}
+  .fc-shot{
+    max-width:100%;border-radius:10px;display:block;cursor:zoom-in;
+    margin-bottom:6px;background:var(--bubble-bot);
+  }
+  .fc-clip{
+    display:flex;align-items:center;justify-content:center;flex:0 0 auto;
+    width:42px;border:1px solid var(--line);border-radius:8px;
+    cursor:pointer;font-size:1.05rem;background:#fff;
+  }
+  .fc-clip:hover{border-color:var(--accent);}
+  .fc-attach{
+    display:flex;align-items:center;gap:10px;margin-top:12px;
+    padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:#fdfbfc;
+  }
+  .fc-attach img{width:38px;height:38px;object-fit:cover;border-radius:6px;}
+  .fc-attach span{font-size:0.82rem;color:var(--muted);flex:1;}
+  .fc-attach button{
+    border:none;background:none;color:var(--muted);
+    font-size:1.2rem;cursor:pointer;padding:0 4px;line-height:1;
+  }
+  .fc-shade{
+    position:fixed;inset:0;z-index:200;display:none;
+    background:rgba(28,18,26,0.9);align-items:center;justify-content:center;padding:24px;
+  }
+  .fc-shade.open{display:flex;}
+  .fc-shade img{max-width:92vw;max-height:88vh;object-fit:contain;border-radius:10px;}
+  .fc-shade .x{
+    position:absolute;top:16px;right:20px;background:none;border:none;
+    color:#fdf8f4;font-size:2rem;cursor:pointer;line-height:1;padding:4px 10px;
+  }
+
+  @media (max-width:760px){
+    .contact{grid-template-columns:1fr;}
+    nav ul{display:none;}
+    .notes{padding:20px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo"><a href="index.html" style="text-decoration:none;">Anaya <span>Suits</span></a></div>
+    <ul>
+      <li><a href="index.html#collections">Collections</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#testimonials">Reviews</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="index.html" class="btn" style="padding:10px 20px;">Back to Shop</a>
+  </nav>
+</header>
+
+<section class="page-head">
+  <h2 class="section-title">Get in Touch</h2>
+  <p class="section-sub">Questions about sizing, fabric or a custom stitch? Send a message, call the shop, or use the chat bubble in the corner.</p>
+</section>
+
+<section>
+  <div class="contact">
+    <div>
+      <form onsubmit="event.preventDefault(); alert('Thanks! This is a demo form — connect it to an email service or backend to go live.');">
+        <input type="text" placeholder="Your name" required>
+        <input type="email" placeholder="Your email" required>
+        <input type="tel" placeholder="Phone (optional)">
+        <textarea placeholder="What are you looking for?" required></textarea>
+        <button type="submit" class="btn">Send Message</button>
+      </form>
+    </div>
+    <div class="info-card">
+      <div class="info-item">
+        <h4>Shop</h4>
+        <p>MG Road, Jaipur, Rajasthan</p>
+      </div>
+      <div class="info-item">
+        <h4>Email</h4>
+        <p>hello@anayasuits.example</p>
+      </div>
+      <div class="info-item">
+        <h4>Hours</h4>
+        <p>Mon–Sat, 10am–8pm · Closed Sunday</p>
+      </div>
+      <div class="info-item">
+        <h4>Live Chat</h4>
+        <p>Click the chat bubble in the bottom-right corner any time.</p>
+      </div>
+      <div class="map-note">Map placeholder — drop in a Google Maps embed here.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Notes ============ -->
+<section>
+  <div class="notes">
+    <h2>Notes</h2>
+    <p class="hint">Sign in to view.</p>
+
+    <!-- Signed out -->
+    <div id="fcAuth">
+      <form id="fcSignInForm">
+        <input type="password" id="fcCode" class="fc-code" placeholder="••••"
+               inputmode="numeric" pattern="[0-9]{4}" maxlength="4"
+               autocomplete="one-time-code" aria-label="Code" required>
+        <div class="row">
+          <button type="submit" class="btn" style="padding:11px 22px;">Sign in</button>
+          <span class="status" id="fcAuthStatus"></span>
+        </div>
+      </form>
+    </div>
+
+    <!-- Signed in -->
+    <div id="fcPanel" class="hidden">
+      <div class="fc-bar">
+        <span id="fcWho"></span>
+        <button type="button" class="fc-signout" id="fcSignOut">Sign out</button>
+      </div>
+      <div class="fc-log" id="fcLog">
+        <div class="fc-empty" id="fcEmpty">No entries yet.</div>
+      </div>
+      <div class="fc-attach" id="fcAttach" hidden>
+        <img id="fcAttachThumb" alt="">
+        <span id="fcAttachName"></span>
+        <button type="button" id="fcAttachClear" aria-label="Remove photo">&times;</button>
+      </div>
+      <form class="fc-compose" id="fcSendForm">
+        <label class="fc-clip" for="fcFile" title="Attach a photo">📎</label>
+        <input type="file" id="fcFile" accept="image/*" hidden>
+        <input type="text" id="fcInput" placeholder="Write something…" autocomplete="off">
+        <button type="submit" class="btn" style="padding:11px 20px;">Send</button>
+      </form>
+      <div class="status" id="fcSendStatus"></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Anaya Suits · MG Road, Jaipur, Rajasthan · <a href="index.html">Home</a><br>
+  Placeholder content — replace with your real business details.
+</footer>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script>
+// ---- Firebase config: paste the values from Firebase console → Project settings → Your apps ----
+var fcFirebaseConfig = {
+  apiKey: "REPLACE_ME",
+  authDomain: "REPLACE_ME",
+  databaseURL: "REPLACE_ME",
+  projectId: "REPLACE_ME",
+  appId: "REPLACE_ME"
+};
+
+// The one shared account this board signs in with. Create it once in
+// Firebase console -> Authentication -> Users -> Add user, using this exact
+// email. For the password, type the 4-digit code followed by the suffix below
+// (so code 1234 means the password "1234-anaya-notes"). Firebase rejects
+// passwords under 6 characters, which is the only reason the suffix exists --
+// it is not a secret and adds no security. To change the code later, edit that
+// one user's password in the console. No edit to this file.
+var FC_ACCOUNT = "notes@anayasuits.example";
+var FC_SUFFIX  = "-anaya-notes";
+
+// Shared with family-chat.html - same database path, same conversation.
+// Thumbnails ride along in the message; full-size photos live in a separate
+// node so opening the board does not download every picture ever posted.
+var FC_PATH = "family-chat/messages";
+var FC_IMGS = "family-chat/images";
+
+var FC_FULL_PX = 1200, FC_FULL_Q = 0.72;   // stored, shown when a photo is tapped
+var FC_THUMB_PX = 420, FC_THUMB_Q = 0.6;   // inline in the thread
+
+(function(){
+  var authBox    = document.getElementById('fcAuth');
+  var panel      = document.getElementById('fcPanel');
+  var signInForm = document.getElementById('fcSignInForm');
+  var codeEl     = document.getElementById('fcCode');
+  var authStatus = document.getElementById('fcAuthStatus');
+  var sendStatus = document.getElementById('fcSendStatus');
+  var whoEl      = document.getElementById('fcWho');
+  var signOutBtn = document.getElementById('fcSignOut');
+  var log        = document.getElementById('fcLog');
+  var emptyEl    = document.getElementById('fcEmpty');
+  var sendForm   = document.getElementById('fcSendForm');
+  var input      = document.getElementById('fcInput');
+  var fileEl     = document.getElementById('fcFile');
+  var attachBox  = document.getElementById('fcAttach');
+  var attachImg  = document.getElementById('fcAttachThumb');
+  var attachName = document.getElementById('fcAttachName');
+  var attachX    = document.getElementById('fcAttachClear');
+  var shade      = document.getElementById('fcShade');
+  var shadeImg   = document.getElementById('fcShadeImg');
+  var shadeX     = document.getElementById('fcShadeClose');
+
+  var msgRef = null;
+  var pendingFull = null, pendingThumb = null;
+
+  function setStatus(el, text, isError){
+    el.textContent = text || '';
+    el.classList.toggle('error', !!isError);
+  }
+
+  // A base64 data URL carries about 3 bytes for every 4 characters.
+  function kb(dataUrl){ return Math.round(dataUrl.length * 0.75 / 1024); }
+
+  // localStorage throws in some private-browsing modes, so every use is guarded.
+  var store = (function(){
+    try { var k = '__fc'; localStorage.setItem(k, k); localStorage.removeItem(k); return localStorage; }
+    catch(e){ return null; }
+  })();
+  function remembered(k){ try { return store ? (store.getItem(k) || '') : ''; } catch(e){ return ''; } }
+  function remember(k, v){ try { if (store) store.setItem(k, v); } catch(e){} }
+
+  // Messages carry no name. A per-browser id is the only thing telling "mine"
+  // from "theirs"; it picks the side of the thread and who sees a delete button.
+  var clientId = remembered('fcClientId');
+  if (!clientId) {
+    clientId = 'c' + Math.random().toString(36).slice(2) + Date.now().toString(36);
+    remember('fcClientId', clientId);
+  }
+
+  if (fcFirebaseConfig.apiKey === "REPLACE_ME") {
+    setStatus(authStatus, 'Not configured yet.', true);
+    signInForm.addEventListener('submit', function(e){ e.preventDefault(); });
+    return;
+  }
+
+  firebase.initializeApp(fcFirebaseConfig);
+  var auth = firebase.auth();
+  var db   = firebase.database();
+
+  function timeOf(ts){
+    if (!ts) return '';
+    var d = new Date(ts);
+    return d.toLocaleString([], {month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'});
+  }
+
+  // ---- photos -------------------------------------------------------------
+
+  // Draw the picture into a canvas at a smaller size and re-encode as JPEG.
+  // Nothing full-resolution ever leaves the browser.
+  function shrink(file, maxPx, quality, done){
+    var url = URL.createObjectURL(file);
+    var img = new Image();
+    img.onload = function(){
+      var scale = Math.min(1, maxPx / Math.max(img.width, img.height));
+      var w = Math.max(1, Math.round(img.width * scale));
+      var h = Math.max(1, Math.round(img.height * scale));
+      var c = document.createElement('canvas');
+      c.width = w; c.height = h;
+      c.getContext('2d').drawImage(img, 0, 0, w, h);
+      URL.revokeObjectURL(url);
+      try { done(c.toDataURL('image/jpeg', quality)); }
+      catch(e){ done(null); }
+    };
+    img.onerror = function(){ URL.revokeObjectURL(url); done(null); };
+    img.src = url;
+  }
+
+  function clearAttachment(){
+    pendingFull = pendingThumb = null;
+    attachImg.removeAttribute('src');
+    attachName.textContent = '';
+    attachBox.hidden = true;
+  }
+
+  fileEl.addEventListener('change', function(){
+    var f = fileEl.files && fileEl.files[0];
+    fileEl.value = '';                       // so the same file can be picked twice
+    if (!f) return;
+    if (f.type.indexOf('image/') !== 0) {
+      setStatus(sendStatus, 'Photos only.', true);
+      return;
+    }
+    setStatus(sendStatus, 'Preparing photo…');
+    shrink(f, FC_FULL_PX, FC_FULL_Q, function(full){
+      if (!full) { setStatus(sendStatus, 'Could not read that image.', true); return; }
+      shrink(f, FC_THUMB_PX, FC_THUMB_Q, function(thumb){
+        pendingFull  = full;
+        pendingThumb = thumb || full;
+        attachImg.src = pendingThumb;
+        attachName.textContent = kb(pendingFull) + ' KB';
+        attachBox.hidden = false;
+        setStatus(sendStatus, '');
+      });
+    });
+  });
+
+  attachX.addEventListener('click', clearAttachment);
+
+  function openShot(key, thumb){
+    shadeImg.src = thumb;                    // instant, then swap for the full one
+    shade.classList.add('open');
+    shadeX.focus();
+    db.ref(FC_IMGS + '/' + key).once('value').then(function(s){
+      var full = s.val();
+      if (full && shade.classList.contains('open')) shadeImg.src = full;
+    }).catch(function(){});
+  }
+  function closeShot(){ shade.classList.remove('open'); shadeImg.removeAttribute('src'); }
+
+  shadeX.addEventListener('click', closeShot);
+  shade.addEventListener('click', function(e){ if (e.target === shade) closeShot(); });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && shade.classList.contains('open')) closeShot();
+  });
+
+  // ---- thread -------------------------------------------------------------
+
+  function showEmpty(){
+    if (log.querySelector('.fc-msg')) return;
+    log.innerHTML = '';
+    emptyEl = document.createElement('div');
+    emptyEl.className = 'fc-empty';
+    emptyEl.textContent = 'No entries yet.';
+    log.appendChild(emptyEl);
+  }
+
+  function removeMsg(key, hasPhoto){
+    if (!window.confirm('Delete this message?')) return;
+    var jobs = [db.ref(FC_PATH + '/' + key).remove()];
+    if (hasPhoto) jobs.push(db.ref(FC_IMGS + '/' + key).remove());
+    Promise.all(jobs).catch(function(err){
+      setStatus(sendStatus, 'Could not delete: ' + err.message, true);
+    });
+  }
+
+  function render(key, msg){
+    if (emptyEl) { emptyEl.remove(); emptyEl = null; }
+    var mine = msg.cid === clientId;
+
+    var wrap = document.createElement('div');
+    wrap.className = 'fc-msg ' + (mine ? 'me' : 'them');
+    wrap.setAttribute('data-key', key);
+
+    var who = document.createElement('div');
+    who.className = 'who';
+    var stamp = document.createElement('span');
+    stamp.textContent = timeOf(msg.ts);
+    who.appendChild(stamp);
+    if (mine) {
+      var del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'fc-del';
+      del.textContent = '×';
+      del.title = 'Delete';
+      del.setAttribute('aria-label', 'Delete message');
+      del.addEventListener('click', function(){ removeMsg(key, !!msg.thumb); });
+      who.appendChild(del);
+    }
+    wrap.appendChild(who);
+
+    if (msg.thumb) {
+      var shot = document.createElement('img');
+      shot.className = 'fc-shot';
+      shot.src = msg.thumb;
+      shot.alt = 'Photo';
+      shot.addEventListener('click', function(){ openShot(key, msg.thumb); });
+      wrap.appendChild(shot);
+    }
+
+    if (msg.text) {
+      var text = document.createElement('div');
+      text.className = 'text';
+      text.textContent = msg.text;
+      wrap.appendChild(text);
+    }
+
+    log.appendChild(wrap);
+    log.scrollTop = log.scrollHeight;
+  }
+
+  function attach(){
+    msgRef = db.ref(FC_PATH).orderByChild('ts').limitToLast(200);
+    msgRef.on('child_added', function(snap){
+      render(snap.key, snap.val() || {});
+    }, function(err){
+      setStatus(sendStatus, 'Could not load notes: ' + err.message, true);
+    });
+    msgRef.on('child_removed', function(snap){
+      var el = log.querySelector('[data-key="' + snap.key + '"]');
+      if (el) el.remove();
+      showEmpty();
+    });
+  }
+
+  function detach(){
+    if (msgRef) { msgRef.off(); msgRef = null; }
+    log.innerHTML = '';
+    emptyEl = null;
+    showEmpty();
+  }
+
+  // ---- sign in ------------------------------------------------------------
+
+  var submitting = false;
+
+  function submitCode(){
+    var code = codeEl.value.trim();
+    if (submitting || !/^[0-9]{4}$/.test(code)) return;
+    submitting = true;
+    setStatus(authStatus, 'Checking…');
+    auth.signInWithEmailAndPassword(FC_ACCOUNT, code + FC_SUFFIX)
+      .then(function(){ codeEl.value = ''; })
+      .catch(function(err){
+        var c = (err && err.code) || '';
+        var msg;
+        if (c === 'auth/too-many-requests') {
+          msg = 'Too many tries. Wait a few minutes.';
+        } else if (c === 'auth/wrong-password' ||
+                   c === 'auth/invalid-credential' ||
+                   c === 'auth/invalid-login-credentials') {
+          msg = 'Wrong code.';
+        } else {
+          msg = err.message;
+        }
+        setStatus(authStatus, msg, true);
+        codeEl.value = '';
+        codeEl.focus();
+      })
+      .then(function(){ submitting = false; });
+  }
+
+  signInForm.addEventListener('submit', function(e){ e.preventDefault(); submitCode(); });
+
+  // Four digits is the whole code, so there is nothing to confirm with a button press.
+  codeEl.addEventListener('input', function(){
+    codeEl.value = codeEl.value.replace(/[^0-9]/g, '').slice(0, 4);
+    setStatus(authStatus, '');
+    if (codeEl.value.length === 4) submitCode();
+  });
+
+  signOutBtn.addEventListener('click', function(){ auth.signOut(); });
+
+  // ---- sending ------------------------------------------------------------
+
+  sendForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    if (!auth.currentUser) return;
+    var text = input.value.trim();
+    if (!text && !pendingFull) return;       // nothing typed and nothing attached
+
+    var full = pendingFull, thumb = pendingThumb;
+    input.value = '';
+    clearAttachment();
+    setStatus(sendStatus, full ? 'Sending photo…' : '');
+
+    var key = db.ref(FC_PATH).push().key;
+    var payload = { cid: clientId, ts: firebase.database.ServerValue.TIMESTAMP };
+    if (text)  payload.text  = text;
+    if (thumb) payload.thumb = thumb;
+
+    var jobs = [db.ref(FC_PATH + '/' + key).set(payload)];
+    if (full) jobs.push(db.ref(FC_IMGS + '/' + key).set(full));
+
+    Promise.all(jobs)
+      .then(function(){ setStatus(sendStatus, ''); })
+      .catch(function(err){
+        setStatus(sendStatus, 'Not sent: ' + err.message, true);
+        if (text) input.value = text;        // hand the words back; the photo is gone
+      });
+  });
+
+  // Firebase keeps the session in this browser, so a return visit stays signed in.
+  auth.onAuthStateChanged(function(user){
+    if (user) {
+      setStatus(authStatus, '');
+      authBox.classList.add('hidden');
+      panel.classList.remove('hidden');
+      whoEl.textContent = 'Signed in';
+      detach();
+      attach();
+    } else {
+      detach();
+      closeShot();
+      clearAttachment();
+      panel.classList.add('hidden');
+      authBox.classList.remove('hidden');
+      whoEl.textContent = '';
+      setStatus(sendStatus, '');
+      codeEl.value = '';
+    }
+  });
+})();
+</script>
+
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/6a55c2ec550ea31d480b660f/1jtfg2r5l';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+
+
+<div class="fc-shade" id="fcShade" role="dialog" aria-modal="true" aria-label="Photo">
+  <button type="button" class="x" id="fcShadeClose" aria-label="Close">&times;</button>
+  <img id="fcShadeImg" src="" alt="">
+</div>
+
+</body>
+</html>

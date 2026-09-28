@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800" role="img" aria-label="Embroidered Cotton Straight-cut">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2=".35" y2="1">
+      <stop offset="0" stop-color="#fdf2ee"/>
+      <stop offset="1" stop-color="#efd6c9"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="800" fill="url(#bg)"/>
+  <rect x="24.0" y="24.0" width="552.0" height="752.0" fill="none" stroke="#9b2d5e" stroke-opacity=".45" stroke-width="1.5"/>
+  <g>
+    <rect x="193.8" y="61.8" width="4.5" height="4.5" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 196.0 64.0)"/>
+    <rect x="219.8" y="61.8" width="4.5" height="4.5" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 222.0 64.0)"/>
+    <rect x="245.8" y="61.8" width="4.5" height="4.5" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 248.0 64.0)"/>
+    <rect x="271.8" y="61.8" width="4.5" height="4.5" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 274.0 64.0)"/>
+    <rect x="297.8" y="61.8" width="4.5" height="4.5" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 300.0 64.0)"/>
+    <rect x="323.8" y="61.8" width="4.5" height="4.5" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 326.0 64.0)"/>
+    <rect x="349.8" y="61.8" width="4.5" height="4.5" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 352.0 64.0)"/>
+    <rect x="375.8" y="61.8" width="4.5" height="4.5" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 378.0 64.0)"/>
+    <rect x="401.8" y="61.8" width="4.5" height="4.5" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 404.0 64.0)"/></g>
+  <g>
+    <rect x="193.8" y="733.8" width="4.5" height="4.5" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 196.0 736.0)"/>
+    <rect x="219.8" y="733.8" width="4.5" height="4.5" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 222.0 736.0)"/>
+    <rect x="245.8" y="733.8" width="4.5" height="4.5" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 248.0 736.0)"/>
+    <rect x="271.8" y="733.8" width="4.5" height="4.5" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 274.0 736.0)"/>
+    <rect x="297.8" y="733.8" width="4.5" height="4.5" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 300.0 736.0)"/>
+    <rect x="323.8" y="733.8" width="4.5" height="4.5" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 326.0 736.0)"/>
+    <rect x="349.8" y="733.8" width="4.5" height="4.5" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 352.0 736.0)"/>
+    <rect x="375.8" y="733.8" width="4.5" height="4.5" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 378.0 736.0)"/>
+    <rect x="401.8" y="733.8" width="4.5" height="4.5" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 404.0 736.0)"/></g>
+    <text x="300.0" y="364.6" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="40.0" fill="#8a4a33" letter-spacing="0.60">Embroidered Cotton</text>
+    <text x="300.0" y="411.8" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="40.0" fill="#8a4a33" letter-spacing="0.60">Straight-cut</text>
+  <line x1="268.0" y1="443.2" x2="332.0" y2="443.2" stroke="#9b2d5e" stroke-width="2.0"/>
+  <text x="300.0" y="477.2" text-anchor="middle" font-family="'Segoe UI',system-ui,sans-serif" font-size="19.0" fill="#8a4a33" fill-opacity=".78">Thread work · fully lined</text>
+  <text x="300.0" y="714.0" text-anchor="middle" font-family="'Segoe UI',system-ui,sans-serif" font-size="15.0" fill="#8a4a33" fill-opacity=".5" letter-spacing="0.8">Photo coming soon</text>
+</svg>

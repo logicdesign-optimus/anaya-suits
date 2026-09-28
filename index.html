@@ -3,17 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Maple &amp; Co. — Handcrafted Goods</title>
+<title>Anaya Suits — Indian Ladies Suits &amp; Ethnic Wear</title>
+<meta name="description" content="Anaya Suits — Anarkali, palazzo sets and straight-cut suits in cotton, chanderi and silk. A small ethnic wear boutique on MG Road, Jaipur.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%F0%9F%AA%A1</text></svg>">
 <style>
   :root{
-    --ink:#1f2a24;
-    --paper:#faf7f2;
-    --accent:#4f7a5c;
-    --accent-dark:#3b5c46;
-    --muted:#6b6f6a;
-    --line:#e4ddd0;
-    --bubble-user:#4f7a5c;
-    --bubble-bot:#eef1ec;
+    --ink:#2a1f2b;
+    --paper:#fdf8f4;
+    --accent:#9b2d5e;
+    --accent-dark:#7a2049;
+    --gold:#c9a227;
+    --muted:#6f6570;
+    --line:#eee0e5;
+    --bubble-user:#9b2d5e;
+    --bubble-bot:#f3e9ed;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{
@@ -25,7 +28,7 @@
   a{color:inherit;}
   header{
     position:sticky;top:0;z-index:50;
-    background:rgba(250,247,242,0.92);
+    background:rgba(253,248,244,0.92);
     backdrop-filter:blur(6px);
     border-bottom:1px solid var(--line);
   }
@@ -57,24 +60,44 @@
   }
   .btn-outline:hover{background:var(--accent);color:#fff;}
   .hero-art{
-    height:320px;border-radius:16px;
-    background:linear-gradient(135deg,#dfe8de,#c9d9c9 60%,#b7cbb8);
-    display:flex;align-items:center;justify-content:center;
-    font-size:4rem;
+    height:320px;border-radius:16px;overflow:hidden;
+    background:linear-gradient(135deg,#f6e3ea,#eccdd9 60%,#e3b9cb);
   }
+  .hero-art img{width:100%;height:100%;object-fit:cover;display:block;}
 
   section{max-width:1100px;margin:0 auto;padding:60px 24px;}
+  section[id]{scroll-margin-top:84px;}   /* clear the sticky header on anchor jumps */
   .section-title{font-size:1.9rem;margin-bottom:8px;}
-  .section-sub{color:var(--muted);margin-bottom:36px;max-width:520px;}
+  .section-sub{color:var(--muted);margin-bottom:36px;max-width:560px;}
+
+  .collection{margin-bottom:54px;}
+  .collection:last-child{margin-bottom:0;}
+  .collection-head{
+    display:flex;align-items:baseline;justify-content:space-between;
+    gap:16px;margin-bottom:6px;flex-wrap:wrap;
+  }
+  .collection-head h3{font-size:1.25rem;}
+  .collection-head .tag{
+    font-size:0.75rem;text-transform:uppercase;letter-spacing:0.8px;
+    color:var(--gold);font-weight:700;
+  }
+  .collection-sub{color:var(--muted);font-size:0.93rem;margin-bottom:20px;}
 
   .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
-  .card{
+  .product{
     background:#fff;border:1px solid var(--line);border-radius:14px;
-    padding:28px;
+    overflow:hidden;display:flex;flex-direction:column;
   }
-  .card .icon{font-size:1.8rem;margin-bottom:14px;}
-  .card h3{font-size:1.1rem;margin-bottom:8px;}
-  .card p{color:var(--muted);font-size:0.93rem;}
+  .product figure{margin:0;cursor:zoom-in;position:relative;background:#f3e9ed;}
+  .product img{
+    width:100%;aspect-ratio:3/4;object-fit:cover;display:block;
+    transition:transform .3s;
+  }
+  .product figure:hover img{transform:scale(1.03);}
+  .product .body{padding:18px 20px 22px;}
+  .product h4{font-size:1rem;margin-bottom:6px;}
+  .product p{color:var(--muted);font-size:0.9rem;margin-bottom:10px;}
+  .price{font-weight:700;color:var(--accent);}
 
   .about{
     display:grid;grid-template-columns:0.9fr 1.1fr;gap:48px;align-items:center;
@@ -82,38 +105,56 @@
     padding:48px;
   }
   .about-art{
-    height:260px;border-radius:12px;
-    background:linear-gradient(135deg,#f0e6d2,#e3d3af);
+    height:260px;border-radius:12px;overflow:hidden;
+    background:linear-gradient(135deg,#f7ecd9,#ecd9b4);
   }
+  .about-art img{width:100%;height:100%;object-fit:cover;display:block;}
 
-  .testimonials{background:#eef1ec;border-radius:16px;padding:48px;}
+  .testimonials{background:#f6edf1;border-radius:16px;padding:48px;}
   .t-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:24px;}
   .t-card{background:#fff;border-radius:12px;padding:24px;}
   .t-card p{font-style:italic;color:var(--ink);margin-bottom:12px;}
   .t-name{font-weight:600;font-size:0.9rem;color:var(--muted);}
 
-  .contact{
-    display:grid;grid-template-columns:1fr 1fr;gap:40px;
+  .cta-band{
+    background:#fff;border:1px solid var(--line);border-radius:16px;
+    padding:40px;text-align:center;
   }
-  .contact form{display:flex;flex-direction:column;gap:14px;}
-  .contact input,.contact textarea{
-    padding:12px 14px;border:1px solid var(--line);border-radius:8px;
-    font-family:inherit;font-size:0.95rem;background:#fff;
-  }
-  .contact textarea{resize:vertical;min-height:110px;}
-  .info-item{margin-bottom:18px;}
-  .info-item h4{font-size:0.85rem;text-transform:uppercase;letter-spacing:0.6px;color:var(--muted);margin-bottom:4px;}
+  .cta-band h2{font-size:1.6rem;margin-bottom:10px;}
+  .cta-band p{color:var(--muted);margin-bottom:22px;}
 
   footer{
     border-top:1px solid var(--line);padding:32px 24px;text-align:center;
     color:var(--muted);font-size:0.88rem;
   }
+  footer a{color:var(--accent);}
+
+  /* Lightbox */
+  .lightbox{
+    position:fixed;inset:0;z-index:100;display:none;
+    background:rgba(28,18,26,0.88);
+    align-items:center;justify-content:center;padding:24px;
+  }
+  .lightbox.open{display:flex;}
+  .lightbox img{
+    max-width:min(90vw,700px);max-height:78vh;object-fit:contain;
+    border-radius:12px;background:#f3e9ed;
+  }
+  .lightbox figcaption{
+    color:#fdf8f4;text-align:center;margin-top:14px;font-size:0.95rem;
+  }
+  .lightbox figcaption strong{display:block;font-size:1.05rem;margin-bottom:2px;}
+  .lightbox-close{
+    position:absolute;top:18px;right:22px;background:none;border:none;
+    color:#fdf8f4;font-size:2rem;line-height:1;cursor:pointer;padding:4px 10px;
+  }
 
   @media (max-width:760px){
-    .hero,.about,.contact{grid-template-columns:1fr;}
+    .hero,.about{grid-template-columns:1fr;}
     .grid-3,.t-grid{grid-template-columns:1fr;}
     nav ul{display:none;}
     .hero{padding-top:60px;}
+    .about,.testimonials{padding:28px;}
   }
 </style>
 </head>
@@ -121,56 +162,163 @@
 
 <header>
   <nav>
-    <div class="logo">Maple <span>&amp; Co.</span></div>
+    <div class="logo">Anaya <span>Suits</span></div>
     <ul>
-      <li><a href="#services">Services</a></li>
+      <li><a href="#collections">Collections</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#testimonials">Reviews</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="contact.html">Contact</a></li>
     </ul>
-    <a href="#contact" class="btn" style="padding:10px 20px;">Get in Touch</a>
+    <a href="contact.html" class="btn" style="padding:10px 20px;">Visit the Shop</a>
   </nav>
 </header>
 
 <section class="hero">
   <div>
-    <h1>Handcrafted goods, made with care in small batches.</h1>
-    <p>Maple &amp; Co. creates locally sourced, sustainably made home goods — from candles to woodwork. Every piece is designed and built by hand.</p>
-    <a href="#contact" class="btn">Shop the Collection</a>
-    <a href="#services" class="btn btn-outline">Learn More</a>
+    <h1>Everyday and festive suits, stitched the way Jaipur does it.</h1>
+    <p>Anarkali, palazzo sets and straight-cut suits in cotton, chanderi and silk — block-printed and hand-finished in small batches, so no two pieces are quite the same.</p>
+    <a href="#collections" class="btn">Browse the Collection</a>
+    <a href="contact.html" class="btn btn-outline">Visit Us</a>
   </div>
-  <div class="hero-art">🌿</div>
+  <div class="hero-art">
+    <img src="images/hero.svg" data-photo="hero" alt="Anaya Suits — MG Road, Jaipur">
+  </div>
 </section>
 
-<section id="services">
-  <h2 class="section-title">What We Offer</h2>
-  <p class="section-sub">A small catalog of things we make well, rather than everything made poorly.</p>
-  <div class="grid-3">
-    <div class="card">
-      <div class="icon">🕯️</div>
-      <h3>Hand-poured Candles</h3>
-      <p>Soy wax, natural fragrance oils, and reusable ceramic vessels.</p>
+<section id="collections">
+  <h2 class="section-title">Our Collections</h2>
+  <p class="section-sub">Three cuts we make well, in fabrics that suit Rajasthan's weather. Tap any photo to see it larger.</p>
+
+  <div class="collection">
+    <div class="collection-head">
+      <h3>Anarkali Suits</h3>
+      <span class="tag">Festive</span>
     </div>
-    <div class="card">
-      <div class="icon">🪵</div>
-      <h3>Woodwork &amp; Decor</h3>
-      <p>Cutting boards, shelving, and small furniture from reclaimed timber.</p>
+    <p class="collection-sub">Full-flare silhouettes for weddings, sangeets and festival days.</p>
+    <div class="grid-3">
+      <article class="product">
+        <figure data-caption="Rose Gold Anarkali" data-detail="Chiffon flare with a zari border · ₹4,200">
+          <img src="images/anarkali-rose-gold.svg" data-photo="anarkali-rose-gold" alt="Rose Gold Anarkali suit" loading="lazy">
+        </figure>
+        <div class="body">
+          <h4>Rose Gold Anarkali</h4>
+          <p>Chiffon flare with a zari border and a matching net dupatta.</p>
+          <div class="price">₹4,200</div>
+        </div>
+      </article>
+      <article class="product">
+        <figure data-caption="Midnight Blue Anarkali" data-detail="Georgette, full length, sequin bodice · ₹5,600">
+          <img src="images/anarkali-midnight-blue.svg" data-photo="anarkali-midnight-blue" alt="Midnight Blue Anarkali suit" loading="lazy">
+        </figure>
+        <div class="body">
+          <h4>Midnight Blue Anarkali</h4>
+          <p>Floor-length georgette with a hand-sequinned bodice.</p>
+          <div class="price">₹5,600</div>
+        </div>
+      </article>
+      <article class="product">
+        <figure data-caption="Ivory Festive Anarkali" data-detail="Hand-embroidered neckline, silk lining · ₹6,900">
+          <img src="images/anarkali-ivory-festive.svg" data-photo="anarkali-ivory-festive" alt="Ivory Festive Anarkali suit" loading="lazy">
+        </figure>
+        <div class="body">
+          <h4>Ivory Festive Anarkali</h4>
+          <p>Hand-embroidered neckline over a soft silk lining.</p>
+          <div class="price">₹6,900</div>
+        </div>
+      </article>
     </div>
-    <div class="card">
-      <div class="icon">🧵</div>
-      <h3>Textiles</h3>
-      <p>Woven throws and table linens made on a small studio loom.</p>
+  </div>
+
+  <div class="collection">
+    <div class="collection-head">
+      <h3>Palazzo Sets</h3>
+      <span class="tag">Everyday</span>
+    </div>
+    <p class="collection-sub">Wide-leg comfort in breathable cotton and light silk.</p>
+    <div class="grid-3">
+      <article class="product">
+        <figure data-caption="Printed Cotton Palazzo Set" data-detail="Kurta, palazzo and dupatta · ₹1,850">
+          <img src="images/palazzo-printed-cotton.svg" data-photo="palazzo-printed-cotton" alt="Printed cotton palazzo set" loading="lazy">
+        </figure>
+        <div class="body">
+          <h4>Printed Cotton Palazzo Set</h4>
+          <p>Three-piece daily wear that survives a Jaipur summer.</p>
+          <div class="price">₹1,850</div>
+        </div>
+      </article>
+      <article class="product">
+        <figure data-caption="Silk Palazzo with Dupatta" data-detail="Art silk, contrast piping · ₹3,400">
+          <img src="images/palazzo-silk-dupatta.svg" data-photo="palazzo-silk-dupatta" alt="Silk palazzo set with dupatta" loading="lazy">
+        </figure>
+        <div class="body">
+          <h4>Silk Palazzo with Dupatta</h4>
+          <p>Art silk with contrast piping — office to evening.</p>
+          <div class="price">₹3,400</div>
+        </div>
+      </article>
+      <article class="product">
+        <figure data-caption="Block-print Palazzo Set" data-detail="Hand block-printed in Sanganer · ₹2,250">
+          <img src="images/palazzo-block-print.svg" data-photo="palazzo-block-print" alt="Block-printed palazzo set" loading="lazy">
+        </figure>
+        <div class="body">
+          <h4>Block-print Palazzo Set</h4>
+          <p>Hand block-printed in Sanganer, vegetable-dyed.</p>
+          <div class="price">₹2,250</div>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <div class="collection">
+    <div class="collection-head">
+      <h3>Straight-cut Suits</h3>
+      <span class="tag">Workwear</span>
+    </div>
+    <p class="collection-sub">Clean lines that hold their shape through the day.</p>
+    <div class="grid-3">
+      <article class="product">
+        <figure data-caption="Chanderi Straight-cut" data-detail="Chanderi cotton-silk, side slits · ₹2,950">
+          <img src="images/straight-chanderi.svg" data-photo="straight-chanderi" alt="Chanderi straight-cut suit" loading="lazy">
+        </figure>
+        <div class="body">
+          <h4>Chanderi Straight-cut</h4>
+          <p>Cotton-silk blend with deep side slits and a sheer dupatta.</p>
+          <div class="price">₹2,950</div>
+        </div>
+      </article>
+      <article class="product">
+        <figure data-caption="Embroidered Cotton Straight-cut" data-detail="Thread work at yoke and cuffs · ₹2,400">
+          <img src="images/straight-embroidered.svg" data-photo="straight-embroidered" alt="Embroidered cotton straight-cut suit" loading="lazy">
+        </figure>
+        <div class="body">
+          <h4>Embroidered Cotton Straight-cut</h4>
+          <p>Thread work at the yoke and cuffs, fully lined.</p>
+          <div class="price">₹2,400</div>
+        </div>
+      </article>
+      <article class="product">
+        <figure data-caption="Festive Silk Straight-cut" data-detail="Banarasi border, raw silk body · ₹4,750">
+          <img src="images/straight-festive-silk.svg" data-photo="straight-festive-silk" alt="Festive silk straight-cut suit" loading="lazy">
+        </figure>
+        <div class="body">
+          <h4>Festive Silk Straight-cut</h4>
+          <p>Raw silk body finished with a woven Banarasi border.</p>
+          <div class="price">₹4,750</div>
+        </div>
+      </article>
     </div>
   </div>
 </section>
 
 <section id="about">
   <div class="about">
-    <div class="about-art"></div>
+    <div class="about-art">
+      <img src="images/about.svg" data-photo="about" alt="Our workroom">
+    </div>
     <div>
       <h2 class="section-title">Our Story</h2>
-      <p style="color:var(--muted);margin-bottom:16px;">Maple &amp; Co. started in a garage workshop with one goal: make things that last, using materials that don't cost the earth. Today we're still a small team, still handmaking every order.</p>
-      <p style="color:var(--muted);">Have a question about an order, a custom piece, or wholesale? Use the chat button in the corner — we're happy to help.</p>
+      <p style="color:var(--muted);margin-bottom:16px;">Anaya Suits began as a single tailoring table on MG Road. We still cut and finish in-house, still buy our block prints from the same families in Sanganer, and still take alterations on every piece we sell.</p>
+      <p style="color:var(--muted);">Questions about sizing, fabric or a custom stitch? Use the chat bubble in the corner, or <a href="contact.html" style="color:var(--accent);">send us a message</a>.</p>
     </div>
   </div>
 </section>
@@ -180,53 +328,91 @@
     <h2 class="section-title">What Customers Say</h2>
     <div class="t-grid">
       <div class="t-card">
-        <p>"The cutting board I ordered is gorgeous — better in person than in photos. Fast shipping too."</p>
+        <p>"The chanderi suit fit perfectly after one alteration, and they did it the same evening. Lovely fabric."</p>
         <div class="t-name">— Priya S.</div>
       </div>
       <div class="t-card">
-        <p>"Customer support answered my sizing question in minutes through the chat. Really easy to reach."</p>
-        <div class="t-name">— Daniel R.</div>
+        <p>"Asked about palazzo lengths on the chat and got an answer in minutes. Ordered two sets since."</p>
+        <div class="t-name">— Meera R.</div>
       </div>
     </div>
   </div>
 </section>
 
-<section id="contact">
-  <div class="contact">
-    <div>
-      <h2 class="section-title">Get in Touch</h2>
-      <p class="section-sub">Prefer forms to chat? Send us a message and we'll reply within a day.</p>
-      <form onsubmit="event.preventDefault(); alert('Thanks! This is a demo form — connect it to an email service or backend to go live.');">
-        <input type="text" placeholder="Your name" required>
-        <input type="email" placeholder="Your email" required>
-        <textarea placeholder="How can we help?" required></textarea>
-        <button type="submit" class="btn">Send Message</button>
-      </form>
-    </div>
-    <div>
-      <div class="info-item">
-        <h4>Email</h4>
-        <p>hello@mapleandco.example</p>
-      </div>
-      <div class="info-item">
-        <h4>Hours</h4>
-        <p>Mon–Fri, 9am–5pm</p>
-      </div>
-      <div class="info-item">
-        <h4>Studio</h4>
-        <p>412 Birchwood Lane, Portland, OR</p>
-      </div>
-      <div class="info-item">
-        <h4>Live Chat</h4>
-        <p>Click the chat bubble in the bottom-right corner any time.</p>
-      </div>
-    </div>
+<section>
+  <div class="cta-band">
+    <h2>Come see the fabric in person</h2>
+    <p>We're on MG Road, Jaipur — open six days a week. Or message us and we'll hold a piece for you.</p>
+    <a href="contact.html" class="btn">Contact &amp; Visit</a>
   </div>
 </section>
 
 <footer>
-  © 2026 Maple &amp; Co. Placeholder content — replace with your real business details.
+  © 2026 Anaya Suits · MG Road, Jaipur, Rajasthan · <a href="family-chat.html">Contact</a><br>
+  Placeholder content — replace with your real business details and product photos.
 </footer>
+
+<script>
+// Swap in a real photo whenever one exists in images/ under the same basename.
+// Until then the SVG placeholder stays, so a missing file never shows as broken.
+(function(){
+  var EXT = ['jpg','jpeg','png','webp','avif'];
+  document.querySelectorAll('img[data-photo]').forEach(function(img){
+    var base = 'images/' + img.getAttribute('data-photo') + '.';
+    var i = 0;
+    (function tryNext(){
+      if (i >= EXT.length) return;              // no photo yet - keep the placeholder
+      var url = base + EXT[i++];
+      var probe = new Image();
+      probe.onload  = function(){ img.src = url; };
+      probe.onerror = tryNext;
+      probe.src = url;
+    })();
+  });
+})();
+</script>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Product photo">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+  <figure style="margin:0;">
+    <img id="lightboxImg" src="" alt="">
+    <figcaption id="lightboxCap"></figcaption>
+  </figure>
+</div>
+
+<script>
+(function(){
+  var box = document.getElementById('lightbox');
+  var img = document.getElementById('lightboxImg');
+  var cap = document.getElementById('lightboxCap');
+  var closeBtn = document.getElementById('lightboxClose');
+
+  function open(fig){
+    var src = fig.querySelector('img');
+    img.src = src.src;
+    img.alt = src.alt;
+    cap.innerHTML = '<strong></strong><span></span>';
+    cap.firstChild.textContent = fig.dataset.caption || src.alt;
+    cap.lastChild.textContent = fig.dataset.detail || '';
+    box.classList.add('open');
+    closeBtn.focus();
+  }
+  function close(){
+    box.classList.remove('open');
+    img.src = '';
+  }
+
+  document.querySelectorAll('.product figure').forEach(function(fig){
+    fig.addEventListener('click', function(){ open(fig); });
+  });
+  closeBtn.addEventListener('click', close);
+  box.addEventListener('click', function(e){ if(e.target === box) close(); });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && box.classList.contains('open')) close();
+  });
+})();
+</script>
 
 <!--Start of Tawk.to Script-->
 <script type="text/javascript">

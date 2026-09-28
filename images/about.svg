@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 520" width="640" height="520" role="img" aria-label="Our workroom">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2=".35" y2="1">
+      <stop offset="0" stop-color="#f7ecd9"/>
+      <stop offset="1" stop-color="#ecd9b4"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="520" fill="url(#bg)"/>
+  <rect x="25.6" y="25.6" width="588.8" height="468.8" fill="none" stroke="#9b2d5e" stroke-opacity=".45" stroke-width="1.6"/>
+  <g>
+    <rect x="206.8" y="65.9" width="4.8" height="4.8" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 209.2 68.3)"/>
+    <rect x="234.5" y="65.9" width="4.8" height="4.8" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 236.9 68.3)"/>
+    <rect x="262.2" y="65.9" width="4.8" height="4.8" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 264.6 68.3)"/>
+    <rect x="289.9" y="65.9" width="4.8" height="4.8" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 292.3 68.3)"/>
+    <rect x="317.6" y="65.9" width="4.8" height="4.8" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 320.0 68.3)"/>
+    <rect x="345.3" y="65.9" width="4.8" height="4.8" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 347.7 68.3)"/>
+    <rect x="373.0" y="65.9" width="4.8" height="4.8" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 375.4 68.3)"/>
+    <rect x="400.7" y="65.9" width="4.8" height="4.8" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 403.1 68.3)"/>
+    <rect x="428.4" y="65.9" width="4.8" height="4.8" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 430.8 68.3)"/></g>
+  <g>
+    <rect x="206.8" y="449.3" width="4.8" height="4.8" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 209.2 451.7)"/>
+    <rect x="234.5" y="449.3" width="4.8" height="4.8" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 236.9 451.7)"/>
+    <rect x="262.2" y="449.3" width="4.8" height="4.8" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 264.6 451.7)"/>
+    <rect x="289.9" y="449.3" width="4.8" height="4.8" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 292.3 451.7)"/>
+    <rect x="317.6" y="449.3" width="4.8" height="4.8" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 320.0 451.7)"/>
+    <rect x="345.3" y="449.3" width="4.8" height="4.8" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 347.7 451.7)"/>
+    <rect x="373.0" y="449.3" width="4.8" height="4.8" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 375.4 451.7)"/>
+    <rect x="400.7" y="449.3" width="4.8" height="4.8" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 403.1 451.7)"/>
+    <rect x="428.4" y="449.3" width="4.8" height="4.8" fill="#9b2d5e" fill-opacity=".55" transform="rotate(45 430.8 451.7)"/></g>
+    <text x="320.0" y="247.4" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="42.7" fill="#8a6a3a" letter-spacing="0.64">Our workroom</text>
+  <line x1="285.9" y1="281.0" x2="354.1" y2="281.0" stroke="#9b2d5e" stroke-width="2.13"/>
+  <text x="320.0" y="317.3" text-anchor="middle" font-family="'Segoe UI',system-ui,sans-serif" font-size="20.3" fill="#8a6a3a" fill-opacity=".78">Cut and finished in-house</text>
+  <text x="320.0" y="428.3" text-anchor="middle" font-family="'Segoe UI',system-ui,sans-serif" font-size="16.0" fill="#8a6a3a" fill-opacity=".5" letter-spacing="0.85">Photo coming soon</text>
+</svg>
