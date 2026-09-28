@@ -189,15 +189,20 @@ var firebaseConfig = {
   measurementId: "G-13QJJV0TKG"
 };
 
-// The one shared account this board signs in with. Create it once in
-// Firebase console -> Authentication -> Users -> Add user, using this exact
-// email. For the password, type the 6-digit code followed by the suffix below
-// (so code 123456 means the password "123456-anaya-notes"). Firebase rejects
-// passwords under 6 characters, which is the only reason the suffix exists --
-// it is not a secret and adds no security. To change the code later, edit that
-// one user's password in the console. No edit to this file.
-var FC_ACCOUNT = "notes@anayasuits.example";
-var FC_SUFFIX  = "-anaya-notes";
+// One entry per person. Each has their own 6-digit code, which is that
+// account's password with FC_SUFFIX appended (code 123456 -> password
+// "123456-anaya-notes"). Create both in Firebase console -> Authentication ->
+// Users -> Add user, using these exact addresses. The addresses never receive
+// mail. "name" is only the label shown on messages; change it freely.
+//
+// Sign-in tries each account in turn, so the code alone identifies the person
+// and the box on screen stays a single field. Keep this list short -- every
+// extra person is another attempt on a wrong code.
+var FC_PEOPLE = [
+  { email: "person-one@anayasuits.example", name: "Person One" },
+  { email: "person-two@anayasuits.example", name: "Person Two" }
+];
+var FC_SUFFIX = "-anaya-notes";
 
 // Shared with contact.html - same database path, same conversation.
 // Thumbnails ride along in the message; full-size photos live in a separate
@@ -232,6 +237,7 @@ var FC_THUMB_PX = 420, FC_THUMB_Q = 0.6;   // inline in the thread
 
   var msgRef = null;
   var pendingFull = null, pendingThumb = null;
+  var me = null;                             // { uid, name } once signed in
 
   function setStatus(el, text, isError){
     el.textContent = text || '';
@@ -241,20 +247,11 @@ var FC_THUMB_PX = 420, FC_THUMB_Q = 0.6;   // inline in the thread
   // A base64 data URL carries about 3 bytes for every 4 characters.
   function kb(dataUrl){ return Math.round(dataUrl.length * 0.75 / 1024); }
 
-  // localStorage throws in some private-browsing modes, so every use is guarded.
-  var store = (function(){
-    try { var k = '__fc'; localStorage.setItem(k, k); localStorage.removeItem(k); return localStorage; }
-    catch(e){ return null; }
-  })();
-  function remembered(k){ try { return store ? (store.getItem(k) || '') : ''; } catch(e){ return ''; } }
-  function remember(k, v){ try { if (store) store.setItem(k, v); } catch(e){} }
-
-  // Messages carry no name. A per-browser id is the only thing telling "mine"
-  // from "theirs"; it picks the side of the thread and who sees a delete button.
-  var clientId = remembered('fcClientId');
-  if (!clientId) {
-    clientId = 'c' + Math.random().toString(36).slice(2) + Date.now().toString(36);
-    remember('fcClientId', clientId);
+  function personFor(email){
+    for (var i = 0; i < FC_PEOPLE.length; i++) {
+      if (FC_PEOPLE[i].email === email) return FC_PEOPLE[i];
+    }
+    return null;
   }
 
   if (firebaseConfig.apiKey === "REPLACE_ME") {
@@ -356,16 +353,17 @@ var FC_THUMB_PX = 420, FC_THUMB_Q = 0.6;   // inline in the thread
 
   function removeMsg(key, hasPhoto){
     if (!window.confirm('Delete this message?')) return;
-    var jobs = [db.ref(FC_PATH + '/' + key).remove()];
-    if (hasPhoto) jobs.push(db.ref(FC_IMGS + '/' + key).remove());
-    Promise.all(jobs).catch(function(err){
-      setStatus(sendStatus, 'Could not delete: ' + err.message, true);
-    });
+    // image first: the rules let the author clear it, and the message is the record
+    var first = hasPhoto ? db.ref(FC_IMGS + '/' + key).remove() : Promise.resolve();
+    first.then(function(){ return db.ref(FC_PATH + '/' + key).remove(); })
+         .catch(function(err){
+           setStatus(sendStatus, 'Could not delete: ' + err.message, true);
+         });
   }
 
   function render(key, msg){
     if (emptyEl) { emptyEl.remove(); emptyEl = null; }
-    var mine = msg.cid === clientId;
+    var mine = !!(me && msg.uid && msg.uid === me.uid);
 
     var wrap = document.createElement('div');
     wrap.className = 'fc-msg ' + (mine ? 'me' : 'them');
@@ -374,7 +372,8 @@ var FC_THUMB_PX = 420, FC_THUMB_Q = 0.6;   // inline in the thread
     var who = document.createElement('div');
     who.className = 'who';
     var stamp = document.createElement('span');
-    stamp.textContent = timeOf(msg.ts);
+    var label = msg.by || 'someone';
+    stamp.textContent = label + (msg.ts ? ' · ' + timeOf(msg.ts) : '');
     who.appendChild(stamp);
     if (mine) {
       var del = document.createElement('button');
@@ -392,7 +391,7 @@ var FC_THUMB_PX = 420, FC_THUMB_Q = 0.6;   // inline in the thread
       var shot = document.createElement('img');
       shot.className = 'fc-shot';
       shot.src = msg.thumb;
-      shot.alt = 'Photo';
+      shot.alt = 'Photo from ' + label;
       shot.addEventListener('click', function(){ openShot(key, msg.thumb); });
       wrap.appendChild(shot);
     }
@@ -433,30 +432,35 @@ var FC_THUMB_PX = 420, FC_THUMB_Q = 0.6;   // inline in the thread
 
   var submitting = false;
 
+  // The code is the only thing typed, so work out whose it is by trying each
+  // account in turn. First one that accepts it wins.
+  function tryPerson(i, code, done){
+    if (i >= FC_PEOPLE.length) { done('Wrong code.'); return; }
+    auth.signInWithEmailAndPassword(FC_PEOPLE[i].email, code + FC_SUFFIX)
+      .then(function(){ done(null); })
+      .catch(function(err){
+        var c = (err && err.code) || '';
+        if (c === 'auth/too-many-requests') { done('Too many tries. Wait a few minutes.'); return; }
+        if (c === 'auth/wrong-password' ||
+            c === 'auth/invalid-credential' ||
+            c === 'auth/invalid-login-credentials' ||
+            c === 'auth/user-not-found') { tryPerson(i + 1, code, done); return; }
+        done(err.message);
+      });
+  }
+
   function submitCode(){
     var code = codeEl.value.trim();
     if (submitting || !/^[0-9]{6}$/.test(code)) return;
     submitting = true;
     setStatus(authStatus, 'Checking…');
-    auth.signInWithEmailAndPassword(FC_ACCOUNT, code + FC_SUFFIX)
-      .then(function(){ codeEl.value = ''; })
-      .catch(function(err){
-        var c = (err && err.code) || '';
-        var msg;
-        if (c === 'auth/too-many-requests') {
-          msg = 'Too many tries. Wait a few minutes.';
-        } else if (c === 'auth/wrong-password' ||
-                   c === 'auth/invalid-credential' ||
-                   c === 'auth/invalid-login-credentials') {
-          msg = 'Wrong code.';
-        } else {
-          msg = err.message;
-        }
-        setStatus(authStatus, msg, true);
-        codeEl.value = '';
-        codeEl.focus();
-      })
-      .then(function(){ submitting = false; });
+    tryPerson(0, code, function(problem){
+      submitting = false;
+      if (!problem) { codeEl.value = ''; return; }
+      setStatus(authStatus, problem, true);
+      codeEl.value = '';
+      codeEl.focus();
+    });
   }
 
   signInForm.addEventListener('submit', function(e){ e.preventDefault(); submitCode(); });
@@ -474,7 +478,7 @@ var FC_THUMB_PX = 420, FC_THUMB_Q = 0.6;   // inline in the thread
 
   sendForm.addEventListener('submit', function(e){
     e.preventDefault();
-    if (!auth.currentUser) return;
+    if (!auth.currentUser || !me) return;
     var text = input.value.trim();
     if (!text && !pendingFull) return;       // nothing typed and nothing attached
 
@@ -484,14 +488,17 @@ var FC_THUMB_PX = 420, FC_THUMB_Q = 0.6;   // inline in the thread
     setStatus(sendStatus, full ? 'Sending photo…' : '');
 
     var key = db.ref(FC_PATH).push().key;
-    var payload = { cid: clientId, ts: firebase.database.ServerValue.TIMESTAMP };
+    var payload = {
+      uid: me.uid,                           // the rules check this against the signed-in user
+      by:  me.name,
+      ts:  firebase.database.ServerValue.TIMESTAMP
+    };
     if (text)  payload.text  = text;
     if (thumb) payload.thumb = thumb;
 
-    var jobs = [db.ref(FC_PATH + '/' + key).set(payload)];
-    if (full) jobs.push(db.ref(FC_IMGS + '/' + key).set(full));
-
-    Promise.all(jobs)
+    // message first, so the photo always has a record that owns it
+    db.ref(FC_PATH + '/' + key).set(payload)
+      .then(function(){ return full ? db.ref(FC_IMGS + '/' + key).set(full) : null; })
       .then(function(){ setStatus(sendStatus, ''); })
       .catch(function(err){
         setStatus(sendStatus, 'Not sent: ' + err.message, true);
@@ -502,13 +509,16 @@ var FC_THUMB_PX = 420, FC_THUMB_Q = 0.6;   // inline in the thread
   // Firebase keeps the session in this browser, so a return visit stays signed in.
   auth.onAuthStateChanged(function(user){
     if (user) {
+      var person = personFor(user.email);
+      me = { uid: user.uid, name: (person && person.name) || 'someone' };
       setStatus(authStatus, '');
       authBox.classList.add('hidden');
       panel.classList.remove('hidden');
-      whoEl.textContent = 'Signed in';
+      whoEl.textContent = 'Signed in as ' + me.name;
       detach();
       attach();
     } else {
+      me = null;
       detach();
       closeShot();
       clearAttachment();
