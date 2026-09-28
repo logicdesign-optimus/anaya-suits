@@ -37,9 +37,9 @@
     font-family:inherit;font-size:0.95rem;background:#fff;width:100%;
   }
   .fc-code{
-    text-align:center;font-size:1.5rem;letter-spacing:14px;
-    text-indent:14px;          /* re-centre: letter-spacing pads the last glyph */
-    padding:14px;max-width:220px;
+    text-align:center;font-size:1.5rem;letter-spacing:12px;
+    text-indent:12px;          /* re-centre: letter-spacing pads the last glyph */
+    padding:14px;max-width:280px;
   }
   .btn{
     display:inline-block;background:var(--accent);color:#fff;
@@ -139,8 +139,8 @@
   <!-- Signed out -->
   <div id="fcAuth">
     <form id="fcSignInForm">
-      <input type="password" id="fcCode" class="fc-code" placeholder="••••"
-             inputmode="numeric" pattern="[0-9]{4}" maxlength="4"
+      <input type="password" id="fcCode" class="fc-code" placeholder="••••••"
+             inputmode="numeric" pattern="[0-9]{6}" maxlength="6"
              autocomplete="one-time-code" aria-label="Code" required>
       <div class="row">
         <button type="submit" class="btn">Sign in</button>
@@ -191,8 +191,8 @@ var firebaseConfig = {
 
 // The one shared account this board signs in with. Create it once in
 // Firebase console -> Authentication -> Users -> Add user, using this exact
-// email. For the password, type the 4-digit code followed by the suffix below
-// (so code 1234 means the password "1234-anaya-notes"). Firebase rejects
+// email. For the password, type the 6-digit code followed by the suffix below
+// (so code 123456 means the password "123456-anaya-notes"). Firebase rejects
 // passwords under 6 characters, which is the only reason the suffix exists --
 // it is not a secret and adds no security. To change the code later, edit that
 // one user's password in the console. No edit to this file.
@@ -435,7 +435,7 @@ var FC_THUMB_PX = 420, FC_THUMB_Q = 0.6;   // inline in the thread
 
   function submitCode(){
     var code = codeEl.value.trim();
-    if (submitting || !/^[0-9]{4}$/.test(code)) return;
+    if (submitting || !/^[0-9]{6}$/.test(code)) return;
     submitting = true;
     setStatus(authStatus, 'Checking…');
     auth.signInWithEmailAndPassword(FC_ACCOUNT, code + FC_SUFFIX)
@@ -461,11 +461,11 @@ var FC_THUMB_PX = 420, FC_THUMB_Q = 0.6;   // inline in the thread
 
   signInForm.addEventListener('submit', function(e){ e.preventDefault(); submitCode(); });
 
-  // Four digits is the whole code, so there is nothing to confirm with a button press.
+  // Six digits is the whole code, so there is nothing to confirm with a button press.
   codeEl.addEventListener('input', function(){
-    codeEl.value = codeEl.value.replace(/[^0-9]/g, '').slice(0, 4);
+    codeEl.value = codeEl.value.replace(/[^0-9]/g, '').slice(0, 6);
     setStatus(authStatus, '');
-    if (codeEl.value.length === 4) submitCode();
+    if (codeEl.value.length === 6) submitCode();
   });
 
   signOutBtn.addEventListener('click', function(){ auth.signOut(); });
