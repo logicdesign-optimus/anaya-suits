@@ -318,7 +318,7 @@ var FC_PEOPLE = [
   { email: "person-one@anayasuits.example", name: "Person One" },
   { email: "person-two@anayasuits.example", name: "Person Two" }
 ];
-var FC_BUILD = "2026-09-28b";   // shown in the console, to confirm which copy loaded
+var FC_BUILD = "2026-09-28c";   // shown in the console, to confirm which copy loaded
 
 // Shared with family-chat.html - same database path, same conversation.
 // Thumbnails ride along in the message; full-size photos live in a separate
@@ -379,12 +379,23 @@ var FC_THUMB_PX = 420, FC_THUMB_Q = 0.6;   // inline in the thread
     fatal = 'Not configured yet.';
   }
 
-  var auth, db;
+  var auth, db, persistenceReady = null;
   if (!fatal) {
     try {
       firebase.initializeApp(fcFirebaseConfig);
       auth = firebase.auth();
       db   = firebase.database();
+
+      // The session lasts only as long as the browser is open. Quitting the
+      // browser signs everyone out, so an unlocked phone found later does not
+      // hand over the thread. Setting this also moves an existing signed-in
+      // user onto the shorter-lived storage.
+      persistenceReady = auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
+        .catch(function(e){
+          // Some private-browsing modes refuse the storage; sign-in still works,
+          // it just falls back to whatever Firebase could use.
+          if (window.console) console.warn('Notes: session-only sign-in unavailable', e);
+        });
     } catch (e) {
       fatal = 'Setup problem: ' + (e && e.message ? e.message : e);
     }
@@ -591,12 +602,15 @@ var FC_THUMB_PX = 420, FC_THUMB_Q = 0.6;   // inline in the thread
     if (submitting || !/^[0-9]{6}$/.test(code)) return;
     submitting = true;
     setStatus(authStatus, 'Checking…');
+    // wait for the persistence choice, so the first sign-in cannot beat it
+    (persistenceReady || Promise.resolve()).then(function(){
     tryPerson(0, code, function(problem){
       submitting = false;
       if (!problem) { codeEl.value = ''; return; }
       setStatus(authStatus, problem, true);
       codeEl.value = '';
       codeEl.focus();
+    });
     });
   }
 
