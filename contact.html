@@ -134,6 +134,9 @@
   /* .notes form sets column for the sign-in box and outranks .fc-compose */
   .notes .fc-compose{flex-direction:row;align-items:center;}
   .fc-attach[hidden]{display:none;}
+  .fc-bar-actions{display:flex;gap:8px;}
+  /* deliberately at the far end of the bar, nowhere near Send */
+  .fc-clear:hover{border-color:#b3261e;color:#b3261e;}
 
   /* attachments */
   .fc-msg .who{display:flex;align-items:center;gap:6px;}
@@ -258,7 +261,7 @@
     <div id="fcPanel" class="hidden">
       <div class="fc-bar">
         <span id="fcWho"></span>
-        <button type="button" class="fc-signout" id="fcSignOut">Sign out</button>
+        <span class="fc-bar-actions"><button type="button" class="fc-signout fc-clear" id="fcClear">Clear</button><button type="button" class="fc-signout" id="fcSignOut">Sign out</button></span>
       </div>
       <div class="fc-log" id="fcLog">
         <div class="fc-empty" id="fcEmpty">No entries yet.</div>
@@ -318,7 +321,7 @@ var FC_PEOPLE = [
   { email: "person-one@anayasuits.example", name: "Person One" },
   { email: "person-two@anayasuits.example", name: "Person Two" }
 ];
-var FC_BUILD = "2026-09-28c";   // shown in the console, to confirm which copy loaded
+var FC_BUILD = "2026-09-28d";   // shown in the console, to confirm which copy loaded
 
 // Shared with family-chat.html - same database path, same conversation.
 // Thumbnails ride along in the message; full-size photos live in a separate
@@ -338,6 +341,7 @@ var FC_THUMB_PX = 420, FC_THUMB_Q = 0.6;   // inline in the thread
   var sendStatus = document.getElementById('fcSendStatus');
   var whoEl      = document.getElementById('fcWho');
   var signOutBtn = document.getElementById('fcSignOut');
+  var clearBtn   = document.getElementById('fcClear');
   var log        = document.getElementById('fcLog');
   var emptyEl    = document.getElementById('fcEmpty');
   var sendForm   = document.getElementById('fcSendForm');
@@ -624,6 +628,28 @@ var FC_THUMB_PX = 420, FC_THUMB_Q = 0.6;   // inline in the thread
   });
 
   signOutBtn.addEventListener('click', function(){ auth.signOut(); });
+
+  // Wipes the whole thread for both people, with no confirmation, as asked.
+  // Deleted straight from the database - there is no undo and no backup.
+  // Removal is one multi-path update so the thread cannot end up half-cleared.
+  clearBtn.addEventListener('click', function(){
+    if (!auth.currentUser) return;
+    setStatus(sendStatus, 'Clearing\u2026');
+    db.ref(FC_PATH).once('value').then(function(snap){
+      var updates = {}, n = 0;
+      snap.forEach(function(child){
+        updates['messages/' + child.key] = null;
+        updates['images/' + child.key]   = null;   // no-op when there was no photo
+        n++;
+      });
+      if (!n) { setStatus(sendStatus, 'Nothing to clear.'); return null; }
+      return db.ref('family-chat').update(updates);
+    }).then(function(){
+      setStatus(sendStatus, '');
+    }).catch(function(err){
+      setStatus(sendStatus, 'Could not clear: ' + err.message, true);
+    });
+  });
 
   // ---- sending ------------------------------------------------------------
 
