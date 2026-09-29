@@ -189,11 +189,11 @@ var firebaseConfig = {
   measurementId: "G-13QJJV0TKG"
 };
 
-// One entry per person. Each has their own 6-digit code, which is that
-// account's password with FC_SUFFIX appended (code 123456 -> password
-// "123456-anaya-notes"). Create both in Firebase console -> Authentication ->
-// Users -> Add user, using these exact addresses. The addresses never receive
-// mail. "name" is only the label shown on messages; change it freely.
+// One entry per person. Each has their own 6-digit code, and that code IS
+// the account password - nothing is appended. (Firebase demands at least 6
+// characters, which six digits meets exactly.) Create both in Firebase console
+// -> Authentication -> Users -> Add user, using these exact addresses. The
+// addresses never receive mail. "name" is only the label shown on messages.
 //
 // Sign-in tries each account in turn, so the code alone identifies the person
 // and the box on screen stays a single field. Keep this list short -- every
@@ -202,7 +202,7 @@ var FC_PEOPLE = [
   { email: "person-one@anayasuits.example", name: "Person One" },
   { email: "person-two@anayasuits.example", name: "Person Two" }
 ];
-var FC_SUFFIX = "-anaya-notes";
+var FC_BUILD = "2026-09-28a";   // shown in the console, to confirm which copy loaded
 
 // Shared with contact.html - same database path, same conversation.
 // Thumbnails ride along in the message; full-size photos live in a separate
@@ -254,15 +254,36 @@ var FC_THUMB_PX = 420, FC_THUMB_Q = 0.6;   // inline in the thread
     return null;
   }
 
-  if (firebaseConfig.apiKey === "REPLACE_ME") {
-    setStatus(authStatus, 'Not configured yet.', true);
-    signInForm.addEventListener('submit', function(e){ e.preventDefault(); });
-    return;
+  // Work out up front whether we can run at all, and if not, why. Reporting the
+  // reason on every keystroke beats returning early and leaving the box inert.
+  var fatal = '';
+  if (typeof firebase === 'undefined') {
+    fatal = 'Sign-in could not load. Check the connection, or an ad blocker.';
+  } else if (firebaseConfig.apiKey === "REPLACE_ME") {
+    fatal = 'Not configured yet.';
   }
 
-  firebase.initializeApp(firebaseConfig);
-  var auth = firebase.auth();
-  var db   = firebase.database();
+  var auth, db;
+  if (!fatal) {
+    try {
+      firebase.initializeApp(firebaseConfig);
+      auth = firebase.auth();
+      db   = firebase.database();
+    } catch (e) {
+      fatal = 'Setup problem: ' + (e && e.message ? e.message : e);
+    }
+  }
+
+  if (fatal) {
+    setStatus(authStatus, fatal, true);
+    signInForm.addEventListener('submit', function(e){
+      e.preventDefault(); setStatus(authStatus, fatal, true);
+    });
+    codeEl.addEventListener('input', function(){ setStatus(authStatus, fatal, true); });
+    if (window.console) console.error('Notes build ' + FC_BUILD + ': ' + fatal);
+    return;
+  }
+  if (window.console) console.log('Notes build ' + FC_BUILD + ' ready');
 
   function timeOf(ts){
     if (!ts) return '';
@@ -436,7 +457,7 @@ var FC_THUMB_PX = 420, FC_THUMB_Q = 0.6;   // inline in the thread
   // account in turn. First one that accepts it wins.
   function tryPerson(i, code, done){
     if (i >= FC_PEOPLE.length) { done('Wrong code.'); return; }
-    auth.signInWithEmailAndPassword(FC_PEOPLE[i].email, code + FC_SUFFIX)
+    auth.signInWithEmailAndPassword(FC_PEOPLE[i].email, code)
       .then(function(){ done(null); })
       .catch(function(err){
         var c = (err && err.code) || '';
