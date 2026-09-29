@@ -173,6 +173,11 @@
   </div>
 </div>
 
+<div class="fc-shade" id="fcShade" role="dialog" aria-modal="true" aria-label="Photo">
+  <button type="button" class="x" id="fcShadeClose" aria-label="Close">&times;</button>
+  <img id="fcShadeImg" src="" alt="">
+</div>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
@@ -552,12 +557,6 @@ var FC_THUMB_PX = 420, FC_THUMB_Q = 0.6;   // inline in the thread
   });
 })();
 </script>
-
-
-<div class="fc-shade" id="fcShade" role="dialog" aria-modal="true" aria-label="Photo">
-  <button type="button" class="x" id="fcShadeClose" aria-label="Close">&times;</button>
-  <img id="fcShadeImg" src="" alt="">
-</div>
 
 </body>
 </html>
